@@ -66,12 +66,13 @@ class UNet(nn.Module):
         x = self.relu(self.conv19(x))
 
         return x
+
+if __name__ == '__main__':
+    model = UNet()
+    x = torch.rand((3, 572, 572))
+    y = model(x)
+    print(y.shape)    
     
-
-
-model = UNet()
-inPut = torch.rand((3,572,572))
-y = model(inPut)
-print(y.shape)
+    
 
         
