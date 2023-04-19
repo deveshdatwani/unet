@@ -19,26 +19,25 @@ class Kvasir(Dataset):
        self.train_images = [os.path.join(self.train_images_dir, i) for i in os.listdir(self.train_images_dir)]
        self.train_masks = [os.path.join(self.masks_dir, i) for i in os.listdir(self.masks_dir)]
        self.size = [572, 572]
+       self.target_size = [388, 388]
+       self.transform = None
+
 
     def __len__(self):
+
         return self.len
     
-    def __getitem__(self, idx):
+
+    def transform(self):
         
+        return None
+    
+    def __getitem__(self, idx):
         image_address = self.train_images[idx]
         mask_address = self.train_masks[idx]
         image = read_image(image_address)
         mask = read_image(mask_address, iomode.GRAY)
         image = Resize(self.size)(image)
-        mask = Resize(self.size)(mask)
+        target = Resize(self.target_size)(mask)
 
-        return image, mask
-
-
-
-if __name__ == '__main__':
-    dataset = Kvasir('/home/deveshdatwani/Datasets/Kvasir-SEG')
-    print("ALL OKAY") 
-    image, mask = dataset[120]
-    print(mask.shape)
-    print(image.shape)
+        return image, target

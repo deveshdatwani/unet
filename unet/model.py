@@ -1,5 +1,6 @@
 from torch import nn
 import torch
+torch.set_grad_enabled(True) 
 
 
 class UNet(nn.Module):
@@ -30,6 +31,7 @@ class UNet(nn.Module):
         self.up4 = nn.ConvTranspose2d(128, 64, 2, stride=2)
         self.max1 = nn.MaxPool2d(2)
         self.relu = nn.ReLU()
+        self.softmax = nn.Softmax(dim=0)
 
 
     def forward(self, x):
@@ -48,27 +50,27 @@ class UNet(nn.Module):
         x = self.relu(self.conv9(x))
         x = self.relu(self.conv10(x))
         x = self.up1(x)
-        x = torch.concatenate((x4[:,4:-4,4:-4], x), dim=0)
+        x = torch.cat((x4[:,:,4:-4,4:-4], x), dim=1)
         x = self.relu(self.conv11(x))
         x = self.relu(self.conv12(x))
         x = self.up2(x)
-        x = torch.concatenate((x3[:,16:-16,16:-16], x), dim=0)
+        x = torch.cat((x3[:,:,16:-16,16:-16], x), dim=1)
         x = self.relu(self.conv13(x))
         x = self.relu(self.conv14(x))
         x = self.up3(x)
-        x = torch.concatenate((x2[:,40:-40,40:-40], x), dim=0)
+        x = torch.cat((x2[:,:,40:-40,40:-40], x), dim=1)
         x = self.relu(self.conv15(x))
         x = self.relu(self.conv16(x))
         x = self.up4(x)
-        x = torch.concatenate((x1[:,88:-88,88:-88], x), dim=0)
+        x = torch.cat((x1[:,:,88:-88,88:-88], x), dim=1)
         x = self.relu(self.conv17(x))
         x = self.relu(self.conv18(x))
-        x = self.relu(self.conv19(x))
+        x = self.softmax(self.conv19(x))
 
         return x
 
 if __name__ == '__main__':
     model = UNet()
-    x = torch.rand((3, 572, 572))
+    x = torch.rand((1, 3, 572, 572))
     y = model(x)
-    print(y.shape)    
+    print(y)    
