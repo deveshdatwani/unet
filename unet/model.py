@@ -72,7 +72,3 @@ if __name__ == '__main__':
     x = torch.rand((3, 572, 572))
     y = model(x)
     print(y.shape)    
-    
-    
-
-        

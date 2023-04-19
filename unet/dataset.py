@@ -7,10 +7,10 @@ import pandas as pd
 import os
 from matplotlib import pyplot as plt
 import cv2
-from torchvision.io import read_image
+from torchvision.io import read_image, ImageReadMode as iomode
 
 
-class KVER(Dataset):
+class Kvasir(Dataset):
 
     def __init__(self, root_dir, json=None):
        self.train_images_dir = os.path.join(root_dir, "images")
@@ -28,7 +28,7 @@ class KVER(Dataset):
         image_address = self.train_images[idx]
         mask_address = self.train_masks[idx]
         image = read_image(image_address)
-        mask = read_image(mask_address)
+        mask = read_image(mask_address, iomode.GRAY)
         image = Resize(self.size)(image)
         mask = Resize(self.size)(mask)
 
@@ -37,9 +37,8 @@ class KVER(Dataset):
 
 
 if __name__ == '__main__':
-    dataset = KVER('/home/deveshdatwani/Datasets/Kvasir-SEG')
+    dataset = Kvasir('/home/deveshdatwani/Datasets/Kvasir-SEG')
     print("ALL OKAY") 
     image, mask = dataset[120]
-    plt.imshow(image.permute(1,2,0))
-    plt.show()
-    
+    print(mask.shape)
+    print(image.shape)
