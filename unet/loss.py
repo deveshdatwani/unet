@@ -14,7 +14,6 @@ class DiceLoss(nn.Module):
 
 
     def forward(self, prediction, target):
-        prediction = torch.argmax(prediction, dim=1).unsqueeze(1).float()
         prediction_flat = prediction.view(-1)
         target_flat = target.view(-1)
         intersection = torch.mul(prediction_flat, target_flat).sum()
