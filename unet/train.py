@@ -22,7 +22,7 @@ class Trainer():
 
 
     def train(self):
-        for i in tqdm(range(self.epochs)):
+        for epoch in tqdm(range(self.epochs)):
             running_loss = 0
             
             for i, data in enumerate(self.train_dataloder):
@@ -35,9 +35,12 @@ class Trainer():
                 self.optim.step()
                 running_loss += loss
 
-                if i != 0 and i % 7 == 0:
-                    print(f'Current losss {running_loss}')
-                    running_loss = 0
+                if i % 5 == 0:
+                    print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
+                         epoch, i * len(data), len(self.dataset),
+                         100. * i / len(self.train_dataloder), loss.item()))
+                    
+            
                 
             print(f'Dice Loss {running_loss}')
                 

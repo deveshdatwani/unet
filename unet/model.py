@@ -32,6 +32,8 @@ class UNet(nn.Module):
         self.max1 = nn.MaxPool2d(2)
         self.relu = nn.ReLU()
         self.softmax = nn.Softmax(dim=0)
+        self.convoutput = nn.Conv2d(2,1,1)
+        self.sa = nn.Sigmoid()
 
 
     def forward(self, x):
@@ -66,6 +68,7 @@ class UNet(nn.Module):
         x = self.relu(self.conv17(x))
         x = self.relu(self.conv18(x))
         x = self.softmax(self.conv19(x))
+        x = self.sa(self.convoutput(x))
 
         return x
 
