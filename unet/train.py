@@ -12,7 +12,7 @@ from dataloader import Loader
 
 # TRAINING LOOP
 class Trainer(object):
-    def __init__(self, model=None, epochs=16, batch_size=2, path='/home/deveshdatwani/Datasets/Kvasir-SEG'):
+    def __init__(self, model=None, epochs=16, batch_size=2, path=None):
         self.model = model
         self.epochs = epochs
         self.batch_size = batch_size
@@ -28,36 +28,28 @@ class Trainer(object):
             running_loss = 0
             
             for i, data in enumerate(self.data_loader):
-                instance, ground_truth = data.values()
-                print(instance.shape)
-                print(ground_truth.shape)
+                instance, mask = data['image'], data['mask']
                 prediction = model(instance.float())
-                # loss = self.criterian(prediction, ground_truth)
-
-                # self.optim.zero_grad()
-                # loss.backward()
-                # self.optim.step()
-                # running_loss += loss.item()
-
+                loss = self.criterian(prediction, mask)               
+                self.optim.zero_grad()
+                loss.backward()
+                self.optim.step()
+                running_loss += loss.item()
+                
                 if i % 5 == 0:
                     print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                          epoch, i * len(data), len(self.dataset),
-                         100. * i / len(self.data_loader), running_loss))
+                         100. * i / len(self.data_loader), running_loss / 5))
                     running_loss = 0
-                        
-
+            
+            break
 
 
 if __name__ == "__main__":
     EPOCHS = 32
-    BATCH_SIZE = 1
+    BATCH_SIZE = 2
     PATH = '/home/deveshdatwani/Datasets/Caravan'
-    HEIGHT=500
-    WIDTH=500
-    dataset = Caravan(PATH)
-    dataloader = Loader()
     model = UNet()
     trainer = Trainer(model=model, batch_size=BATCH_SIZE, epochs=EPOCHS, path=PATH)
     trainer()
-    
     

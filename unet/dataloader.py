@@ -11,6 +11,4 @@ class Loader(object):
         pass
 
     def __call__(self, dataset, batch_size):
-        return DataLoader(dataset, batch_size, shuffle=True)
-
-    
+        return DataLoader(dataset, batch_size, shuffle=True, num_workers=4)
