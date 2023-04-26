@@ -1,79 +1,67 @@
-from torch import nn
 import torch
-torch.set_grad_enabled(True) 
+import torch.nn as nn
+import torchvision.transforms.functional as TF
 
-
-class UNet(nn.Module):
-    def __init__(self):
-        super(UNet, self).__init__()
-        self.conv1 = nn.Conv2d(3, 64, 3)
-        self.conv2 = nn.Conv2d(64, 64, 3)
-        self.conv3 = nn.Conv2d(64, 128, 3)
-        self.conv4 = nn.Conv2d(128, 128, 3)
-        self.conv5 = nn.Conv2d(128, 256, 3)
-        self.conv6 = nn.Conv2d(256, 256, 3)
-        self.conv7 = nn.Conv2d(256, 512, 3)
-        self.conv8 = nn.Conv2d(512, 512, 3)
-        self.conv9 = nn.Conv2d(512, 1024, 3)
-        self.conv10 = nn.Conv2d(1024, 1024, 3)
-        self.conv11 = nn.Conv2d(1024, 512, 3)
-        self.conv12 = nn.Conv2d(512, 512, 3)
-        self.conv13 = nn.Conv2d(512, 256, 3)
-        self.conv14 = nn.Conv2d(256, 256, 3)
-        self.conv15 = nn.Conv2d(256, 128, 3)
-        self.conv16 = nn.Conv2d(128, 128, 3)
-        self.conv17 = nn.Conv2d(128, 64, 3)
-        self.conv18 = nn.Conv2d(64, 64, 3)
-        self.conv19 = nn.Conv2d(64, 2, 1)
-        self.up1 = nn.ConvTranspose2d(1024, 512, 2, stride=2)
-        self.up2 = nn.ConvTranspose2d(512, 256, 2, stride=2)
-        self.up3 = nn.ConvTranspose2d(256, 128, 2, stride=2)
-        self.up4 = nn.ConvTranspose2d(128, 64, 2, stride=2)
-        self.max1 = nn.MaxPool2d(2)
-        self.relu = nn.ReLU()
-        self.softmax = nn.Softmax(dim=0)
-        self.convoutput = nn.Conv2d(2,1,1)
-        self.sa = nn.Sigmoid()
-
+class DoubleConv(nn.Module):
+    def __init__(self, in_channels, out_channels):
+        super(DoubleConv, self).__init__()
+        self.conv = nn.Sequential(
+            nn.Conv2d(in_channels, out_channels, 3, 1, 1, bias=False),
+            nn.BatchNorm2d(out_channels),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(out_channels, out_channels, 3, 1, 1, bias=False),
+            nn.BatchNorm2d(out_channels),
+            nn.ReLU(inplace=True),
+        )
 
     def forward(self, x):
-        x = self.relu(self.conv1(x))
-        x1 = self.relu(self.conv2(x))
-        x = self.max1(x1)
-        x = self.relu(self.conv3(x))
-        x2 = self.relu(self.conv4(x))
-        x = self.max1(x2)
-        x = self.relu(self.conv5(x))
-        x3 = self.relu(self.conv6(x))
-        x = self.max1(x3)
-        x = self.relu(self.conv7(x))
-        x4 = self.relu(self.conv8(x))
-        x = self.max1(x4)
-        x = self.relu(self.conv9(x))
-        x = self.relu(self.conv10(x))
-        x = self.up1(x)
-        x = torch.cat((x4[:,:,4:-4,4:-4], x), dim=1)
-        x = self.relu(self.conv11(x))
-        x = self.relu(self.conv12(x))
-        x = self.up2(x)
-        x = torch.cat((x3[:,:,16:-16,16:-16], x), dim=1)
-        x = self.relu(self.conv13(x))
-        x = self.relu(self.conv14(x))
-        x = self.up3(x)
-        x = torch.cat((x2[:,:,40:-40,40:-40], x), dim=1)
-        x = self.relu(self.conv15(x))
-        x = self.relu(self.conv16(x))
-        x = self.up4(x)
-        x = torch.cat((x1[:,:,88:-88,88:-88], x), dim=1)
-        x = self.relu(self.conv17(x))
-        x = self.relu(self.conv18(x))
-        x = self.softmax(self.conv19(x))
-        x = self.sa(self.convoutput(x))
+        return self.conv(x)
 
-        return x
+class UNet(nn.Module):
+    def __init__(
+            self, in_channels=3, out_channels=1, features=[64, 128, 256, 512],
+    ):
+        super(UNet, self).__init__()
+        self.ups = nn.ModuleList()
+        self.downs = nn.ModuleList()
+        self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
 
-if __name__ == '__main__':
-    model = UNet()
-    x = torch.rand((1, 3, 572, 572))
-    y = model(x)
-    print(y)    
+        # Down part of UNET
+        for feature in features:
+            self.downs.append(DoubleConv(in_channels, feature))
+            in_channels = feature
+
+        # Up part of UNET
+        for feature in reversed(features):
+            self.ups.append(
+                nn.ConvTranspose2d(
+                    feature*2, feature, kernel_size=2, stride=2,
+                )
+            )
+            self.ups.append(DoubleConv(feature*2, feature))
+
+        self.bottleneck = DoubleConv(features[-1], features[-1]*2)
+        self.final_conv = nn.Conv2d(features[0], out_channels, kernel_size=1)
+
+    def forward(self, x):
+        skip_connections = []
+
+        for down in self.downs:
+            x = down(x)
+            skip_connections.append(x)
+            x = self.pool(x)
+
+        x = self.bottleneck(x)
+        skip_connections = skip_connections[::-1]
+
+        for idx in range(0, len(self.ups), 2):
+            x = self.ups[idx](x)
+            skip_connection = skip_connections[idx//2]
+
+            if x.shape != skip_connection.shape:
+                x = TF.resize(x, size=skip_connection.shape[2:])
+
+            concat_skip = torch.cat((skip_connection, x), dim=1)
+            x = self.ups[idx+1](concat_skip)
+
+        return self.final_conv(x)
