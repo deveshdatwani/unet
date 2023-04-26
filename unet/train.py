@@ -19,7 +19,7 @@ class Trainer(object):
         self.dataset = Caravan(PATH)
         self.dataloader = Loader()
         self.data_loader = self.dataloader(dataset=self.dataset, batch_size=self.batch_size)
-        self.optim = Adam(params=model.parameters(), lr=0.001)
+        self.optim = Adam(params=model.parameters(), lr=0.0001)
         self.criterian = DiceLoss()
 
 
@@ -47,7 +47,7 @@ class Trainer(object):
 
 if __name__ == "__main__":
     EPOCHS = 32
-    BATCH_SIZE = 2
+    BATCH_SIZE = 1
     PATH = '/home/deveshdatwani/Datasets/Caravan'
     model = UNet()
     trainer = Trainer(model=model, batch_size=BATCH_SIZE, epochs=EPOCHS, path=PATH)
