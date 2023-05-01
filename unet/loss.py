@@ -4,9 +4,7 @@ torch.set_grad_enabled(True)
 from torch.autograd import Variable
 
 
-
 class DiceLoss(nn.Module):
-    
     def __init__(self, smooth=0.01):
         super(DiceLoss, self).__init__()
         self.smooth = smooth
@@ -14,11 +12,15 @@ class DiceLoss(nn.Module):
 
 
     def forward(self, prediction, target):
+        # prediction[prediction > 0.5] = 1
+        # target[target > 0.5] = 1
+
         prediction_flat = prediction.view(-1)
         target_flat = target.view(-1)
+
         intersection = (prediction_flat * target_flat).sum()
         prediction_sum  = (prediction_flat * prediction_flat).sum()
-        target_sum = target_flat.sum()
-        loss = 1 - (((2 * intersection) / (prediction_sum + target_sum)) / 2)   
+        target_sum = (target_flat * target_flat).sum()
+        loss = 1 - ((2 * intersection) / (prediction_sum + target_sum)) 
 
         return loss

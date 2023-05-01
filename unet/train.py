@@ -47,7 +47,7 @@ class Trainer(object):
 
 if __name__ == "__main__":
     EPOCHS = 32
-    BATCH_SIZE = 1
+    BATCH_SIZE = 2
     PATH = '/home/deveshdatwani/Datasets/Caravan'
     model = UNet()
     trainer = Trainer(model=model, batch_size=BATCH_SIZE, epochs=EPOCHS, path=PATH)
