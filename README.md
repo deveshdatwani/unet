@@ -14,7 +14,7 @@ The consequent step was to implement the attention mechanism from the paper "Att
 
 ### Architecture 
 
-<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/architecture.png' width=600></p>
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/architecture.png' width=200></p>
 
 The U-Net architecture consists of two parts: the contracting path and the expanding path. The contracting path is a typical CNN architecture that performs convolution and pooling operations to reduce the spatial size of the input image while increasing the number of feature maps. This path is responsible for capturing the context of the image.
 
@@ -33,8 +33,8 @@ Before testing the implementation of U-Net on the Kvasir-SEG dataset, I decided 
 
 Here's an example of an instance and it's corresponding masks from the CARAVANA dataset
 
-<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/sample1.jpg' width=400></p>
-<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/mask1.gif' width=400></p>
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/sample1.jpg' width=200></p>
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/mask1.gif' width=200></p>
 
 
 #### <i> Kvasir Segmentation </i>
