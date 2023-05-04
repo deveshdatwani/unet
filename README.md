@@ -14,7 +14,7 @@ The consequent step was to implement the attention mechanism from the paper "Att
 
 ### Architecture 
 
-<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/architecture.png' width=200></p>
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/architecture.png' width=400></p>
 
 The U-Net architecture consists of two parts: the contracting path and the expanding path. The contracting path is a typical CNN architecture that performs convolution and pooling operations to reduce the spatial size of the input image while increasing the number of feature maps. This path is responsible for capturing the context of the image.
 
@@ -40,6 +40,11 @@ Here's an example of an instance and it's corresponding masks from the CARAVANA 
 #### <i> Kvasir Segmentation </i>
 
 And here's an example of an instance from the Kvasir-SEG dataset
-
-<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/kvasir-seg-instance.jpg' width=400></p>
-<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/kvasir-seg-mask.jpg' width=400></p>
+<div class="row">
+  <div class="column">
+    <p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/kvasir-seg-instance.jpg' width=200></p>
+  </div>
+  <div>
+    <p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/kvasir-seg-mask.jpg' width=200></p>
+  </div>
+ </div>
