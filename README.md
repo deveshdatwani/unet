@@ -40,24 +40,16 @@ Here's an example of an instance and it's corresponding masks from the CARAVANA 
 #### <i> Kvasir Segmentation </i>
 
 And here's an example of an instance from the Kvasir-SEG dataset
-<div class="row">
-  <div class="column">
-    <p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/kvasir-seg-instance.jpg' width=200></p>
-  </div>
-  <div>
-    <p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/kvasir-seg-mask.jpg' width=200></p>
-  </div>
- </div>
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/kvasir-seg-instance.jpg' width=200></p>
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/kvasir-seg-mask.jpg' width=200></p>
 
-.column {
-  float: left;
-  width: 33.33%;
-  padding: 5px;
-}
+### Dataset Imbalance
 
-/* Clear floats after image containers */
-.row::after {
-  content: "";
-  clear: both;
-  display: table;
-}
+As can be observed, the Kvasir segmentation dataset is highly imbalanced. To compensate for this, I implemented Dice Loss as opposed to cross entropy loss mentioned in the paper.  
+
+Dice loss addresses the issue of imbalance by focusing on the overlapping regions between the predicted and ground truth segmentation masks. It calculates the overlap between the two masks as the Dice coefficient, which is a measure of similarity between two sets. The Dice coefficient is defined as twice the intersection of the two sets divided by the sum of their sizes.
+
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/dice-loss.png' width=200></p>
+
+I must admit that I spend a couple of days wondering why my model training was stuck at a sub-optimal point. The error was in the implementation of my dice loss. The correct formula for Dice Loss is shown above. 
+
