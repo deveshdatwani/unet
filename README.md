@@ -24,3 +24,16 @@ The two paths are connected through skip connections that allow the model to ret
 
 I implemented this with my own understanding which worked very well. However, I found Alladin's implementation to be cleaner and ingeneous so I picked up his model implementation and added it to this repository.  
 
+
+### Dataset
+
+Before testing the implementation of U-Net on the Kvasir-SEG dataset, I decided to test it on the CARAVANA dataset. The reason behind this decision was that the CARAVANA dataset is slightly more balanced than the Kvasir-SEG dataset and I wanted to start off with a dataset that is more balanced in terms of class distribution before moving to a more challenging dataset like Kvasir-SEG. 
+
+#### CARAVANA 
+
+Here's an example of the instance and it's corresponding masks from the CARAVANA dataset
+
+
+
+
+
