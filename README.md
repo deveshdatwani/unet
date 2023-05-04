@@ -31,11 +31,15 @@ Before testing the implementation of U-Net on the Kvasir-SEG dataset, I decided 
 
 #### <i> CARAVANA Segmentation </i> 
 
-Here's an example of the instance and it's corresponding masks from the CARAVANA dataset
+Here's an example of an instance and it's corresponding masks from the CARAVANA dataset
 
 <p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/sample1.jpg' width=400></p>
 <p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/mask1.gif' width=400></p>
 
 
+#### <i> Kvasir Segmentation </i>
 
+And here's an example of an instance from the Kvasir-SEG dataset
 
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/kvasir-seg-instance.jpg' width=400></p>
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/kvasir-seg-mask.gif' width=400></p>
