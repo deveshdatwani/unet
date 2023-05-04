@@ -10,3 +10,11 @@ The U-Net is a convolutional neural network (CNN) architecture developed for bio
 This repository was created to implementat the U-Net architecture from scratch and train it on two publicly available datasets, Kvasir-SEG and CARAVANA. 
 
 The consequent step was to implement the attention mechanism from the paper "Attention U-Net" in order to build a solid understanding of the same.
+
+
+### Architecture 
+
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/architecture.png' width=600></p>
+
+
+
