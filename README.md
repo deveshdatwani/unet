@@ -1,4 +1,4 @@
-# U-Net
+# U-Net But With Attention
 
 ### Semantic Segmentation On Medical Images Through U Net With Attention Mechanism
 
