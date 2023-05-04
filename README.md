@@ -10,3 +10,30 @@ The U-Net is a convolutional neural network (CNN) architecture developed for bio
 This repository was created to implementat the U-Net architecture from scratch and train it on two publicly available datasets, Kvasir-SEG and CARAVANA. 
 
 The consequent step was to implement the attention mechanism from the paper "Attention U-Net" in order to build a solid understanding of the same.
+
+
+### Architecture 
+
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/architecture.png' width=600></p>
+
+The U-Net architecture consists of two parts: the contracting path and the expanding path. The contracting path is a typical CNN architecture that performs convolution and pooling operations to reduce the spatial size of the input image while increasing the number of feature maps. This path is responsible for capturing the context of the image.
+
+The expanding path, on the other hand, uses upsampling and concatenation operations to increase the spatial size of the feature maps while reducing their depth. This path is responsible for precise localization of the objects in the image.
+
+The two paths are connected through skip connections that allow the model to retain important spatial information that is lost during the pooling and downsampling operations of the contracting path. These skip connections allow the model to accurately localize the segmented objects in the image.
+
+I implemented this with my own understanding which worked very well. However, I found Alladin's implementation to be cleaner and ingeneous so I picked up his model implementation and added it to this repository.  
+
+
+### Dataset
+
+Before testing the implementation of U-Net on the Kvasir-SEG dataset, I decided to test it on the CARAVANA dataset. The reason behind this decision was that the CARAVANA dataset is slightly more balanced than the Kvasir-SEG dataset and I wanted to start off with a dataset that is more balanced in terms of class distribution before moving to a more challenging dataset like Kvasir-SEG. 
+
+#### CARAVANA 
+
+Here's an example of the instance and it's corresponding masks from the CARAVANA dataset
+
+
+
+
+
