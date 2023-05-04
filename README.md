@@ -29,7 +29,7 @@ I implemented this with my own understanding which worked very well. However, I 
 
 Before testing the implementation of U-Net on the Kvasir-SEG dataset, I decided to test it on the CARAVANA dataset. The reason behind this decision was that the CARAVANA dataset is slightly more balanced than the Kvasir-SEG dataset and I wanted to start off with a dataset that is more balanced in terms of class distribution before moving to a more challenging dataset like Kvasir-SEG. 
 
-#### CARAVANA 
+#### <i> CARAVANA Segmentation </i> 
 
 Here's an example of the instance and it's corresponding masks from the CARAVANA dataset
 
