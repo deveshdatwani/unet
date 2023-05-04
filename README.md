@@ -42,4 +42,4 @@ Here's an example of an instance and it's corresponding masks from the CARAVANA 
 And here's an example of an instance from the Kvasir-SEG dataset
 
 <p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/kvasir-seg-instance.jpg' width=400></p>
-<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/kvasir-seg-mask.gif' width=400></p>
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/kvasir-seg-mask.jpg' width=400></p>
