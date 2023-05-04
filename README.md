@@ -33,6 +33,8 @@ Before testing the implementation of U-Net on the Kvasir-SEG dataset, I decided 
 
 Here's an example of the instance and it's corresponding masks from the CARAVANA dataset
 
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/sample1.jpg' width=400></p>
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/mask1.gif' width=400></p>
 
 
 
