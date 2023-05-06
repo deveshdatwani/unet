@@ -22,8 +22,11 @@ class UNet(nn.Module):
     def __init__(
             self, in_channels=3, out_channels=1, features=[64, 128, 256, 512]):
             super(UNet, self).__init__()
-            self.doubleConvolution = nn.Sequential()
-    
-    def forward(self, x):
-         return x
-    
+            self.double_convolution = nn.Sequential(nn.Conv2d(in_channels, out_channels, padding=1, kernel_size=3),
+                                                   nn.BatchNorm2d(out_channels),
+                                                   nn.ReLU(),
+                                                   nn.Conv2d(out_channels, out_channels),
+                                                   nn.BatchNorm2d(out_channels),
+                                                   nn.ReLU())
+            self.bottle_neck = None
+            
