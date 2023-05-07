@@ -8,10 +8,10 @@ from copy import copy
 class AttentionBlock(nn.Module):
     def __init__(self, F):
         super(AttentionBlock, self).__init__()
-        self.convWx = nn.Conv2d(F, F, 1, 1)
-        self.convWg = nn.Conv2d(F, F, 1, 1)
+        self.convWx = nn.Sequential(nn.Conv2d(F, F, 1, 1, bias=True), nn.BatchNorm2d(F))
+        self.convWg = nn.Sequential(nn.Conv2d(F, F, 1, 1, bias=True), nn.BatchNorm2d(F))
         self.relu = nn.ReLU(inplace=True)
-        self.convPsi = nn.Conv2d(F, F, 1, 1)
+        self.convPsi = nn.Sequential(nn.Conv2d(F, 1, 1, 1, bias=True), nn.BatchNorm2d(F))
         self.sigmoid = nn.Sigmoid()
 
 
@@ -24,6 +24,7 @@ class AttentionBlock(nn.Module):
         AG = self.convPsi(AG)
         AG = self.sigmoid(AG)
         Wx = AG * Wx_add 
+
 
         return Wx 
 
