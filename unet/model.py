@@ -27,7 +27,7 @@ class UNet(nn.Module):
         self.double_convolution_3 = DoubleConv(128, 256)
         self.double_convolution_4 = DoubleConv(256, 512)
         self.double_convolution_5 = DoubleConv(512, 1024)
-        self.upsample_5 = nn.Upsample((71, 71, 512))
+        self.upsample_5 = nn.ConvTranspose2d(1024, 512, 2, 2)
         self.up_double_convolution_5 = DoubleConv(1024, 512)
         self.bottle_neck = None
         
@@ -43,9 +43,12 @@ class UNet(nn.Module):
         x = self.downsample(x_skip_connection_4)
         x = self.double_convolution_5(x)
         x = self.upsample_5(x)
-        print(f'AFTER UPSAMPLE {x.shape}')
-        print(x_skip_connection_4.shape)
-        x = torch.cat((x, x_skip_connection_4))
+        
+        if x.shape != x_skip_connection_4.shape:
+            x = TF.resize(x, 71, antialias=None)
+        
+        x = torch.cat([x, x_skip_connection_4])
+        print(x.shape)
         x = self.up_double_convolution_5(x)
 
 
