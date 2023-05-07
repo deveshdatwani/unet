@@ -36,6 +36,7 @@ class UNet(nn.Module):
         self.up_double_convolution_7 = DoubleConv(256, 128)
         self.up_double_convolution_8 = DoubleConv(128, 1)
         self.bottle_neck = None
+        self.final_conv = nn.Sequential(nn.Conv2d(64, 1, 1), nn.Sigmoid())
         
 
     def forward(self, x):
@@ -76,6 +77,7 @@ class UNet(nn.Module):
 
         x = torch.cat([x, x_skip_connection_1], dim=1)
         x = self.up_double_convolution_8(x)
+        x = self.final_conv(x)
 
         return x
 
