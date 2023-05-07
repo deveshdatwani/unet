@@ -2,6 +2,31 @@ import torch
 import torch.nn as nn
 import torchvision.transforms.functional as TF
 from torchvision.transforms import ToTensor, Resize, InterpolationMode, Normalize
+from copy import copy
+
+
+class AttentionBlock(nn.Module):
+    def __init__(self, F):
+        super(AttentionBlock, self).__init__()
+        self.convWx = nn.Conv2d(F, F, 1, 1)
+        self.convWg = nn.Conv2d(F, F, 1, 1)
+        self.relu = nn.ReLU(inplace=True)
+        self.convPsi = nn.Conv2d(F, F, 1, 1)
+        self.sigmoid = nn.Sigmoid()
+
+
+    def forward(self, Wg, Wx):
+        Wx_add = copy(Wx)
+        Wg = self.convWg(Wg)
+        Wx = self.convWx(Wx)
+        AG = Wg + Wx
+        AG = self.relu(AG)
+        AG = self.convPsi(AG)
+        AG = self.sigmoid(AG)
+        Wx = AG * Wx_add 
+
+        return Wx 
+
 
 
 class DoubleConv(nn.Module):
@@ -37,9 +62,14 @@ class UNet(nn.Module):
         self.up_double_convolution_7 = DoubleConv(256, 128)
         self.up_double_convolution_8 = DoubleConv(128, 64)
         self.final_conv = nn.Sequential(nn.Conv2d(64, 1, 1, 1), nn.Sigmoid())
+        self.attention_block1 = AttentionBlock(512)
+        self.attention_block2 = AttentionBlock(256)
+        self.attention_block3 = AttentionBlock(128)
         
 
     def forward(self, x):
+        # Downward 
+
         x_skip_connection_1 = self.double_convolution_1(x)
         x = self.downsample(x_skip_connection_1)
         x_skip_connection_2 = self.double_convolution_2(x)
@@ -49,35 +79,40 @@ class UNet(nn.Module):
         x_skip_connection_4 = self.double_convolution_4(x)
         x = self.downsample(x_skip_connection_4)
         x = self.double_convolution_5(x)
+        
+        # Upward 
         x = self.upsample_5(x)
         
         if x.shape != x_skip_connection_4.shape:
-            x = TF.resize(x, 71, antialias=None)
+            x_skip_connection_4 = TF.resize(x_skip_connection_4, x.shape[2], antialias=None)
         
+        x = self.attention_block1(x_skip_connection_4, x)
+
         x = torch.cat([x, x_skip_connection_4], dim=1)
         x = self.up_double_convolution_5(x)
         x = self.upsample_6(x)
 
         if x.shape != x_skip_connection_3.shape:
-            x = TF.resize(x, 143, antialias=None)
+            x_skip_connection_3 = TF.resize(x_skip_connection_3, x.shape[2], antialias=None)
 
         x = torch.cat([x, x_skip_connection_3], dim=1)
         x = self.up_double_convolution_6(x)
         x = self.upsample_7(x)
 
         if x.shape != x_skip_connection_2.shape:
-            x = TF.resize(x, 256, antialias=None)
+            x_skip_connection_2 = TF.resize(x_skip_connection_2, x.shape[2], antialias=None)
         
         x = torch.cat([x, x_skip_connection_2], dim=1)
         x = self.up_double_convolution_7(x)
         x = self.upsample_8(x)
 
         if x.shape!= x_skip_connection_1.shape:
-            x = TF.resize(x, 572, antialias=None)
+            x_skip_connection_1 = TF.resize(x_skip_connection_1, x.shape[2], antialias=None)
 
         x = torch.cat([x, x_skip_connection_1], dim=1)
         x = self.up_double_convolution_8(x)
         x = self.final_conv(x)
+
 
         return x
 
