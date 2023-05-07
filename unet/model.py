@@ -3,6 +3,7 @@ import torch.nn as nn
 import torchvision.transforms.functional as TF
 from torchvision.transforms import ToTensor, Resize, InterpolationMode, Normalize
 
+
 class DoubleConv(nn.Module):
     def __init__(self, in_channels, out_channels):
         super(DoubleConv, self).__init__()
@@ -34,9 +35,8 @@ class UNet(nn.Module):
         self.up_double_convolution_5 = DoubleConv(1024, 512)
         self.up_double_convolution_6 = DoubleConv(512, 256)
         self.up_double_convolution_7 = DoubleConv(256, 128)
-        self.up_double_convolution_8 = DoubleConv(128, 1)
-        self.bottle_neck = None
-        self.final_conv = nn.Sequential(nn.Conv2d(64, 1, 1), nn.Sigmoid())
+        self.up_double_convolution_8 = DoubleConv(128, 64)
+        self.final_conv = nn.Sequential(nn.Conv2d(64, 1, 1, 1), nn.Sigmoid())
         
 
     def forward(self, x):
@@ -82,3 +82,7 @@ class UNet(nn.Module):
         return x
 
             
+if __name__ == '__main__':
+    x_input = torch.rand((3, 572, 572))
+    model = UNet()
+    y = model(x_input.unsqueeze(0))
