@@ -11,7 +11,7 @@ class AttentionBlock(nn.Module):
         self.convWx = nn.Sequential(nn.Conv2d(F, F, 1, 1, bias=True), nn.BatchNorm2d(F))
         self.convWg = nn.Sequential(nn.Conv2d(F, F, 1, 1, bias=True), nn.BatchNorm2d(F))
         self.relu = nn.ReLU(inplace=True)
-        self.convPsi = nn.Sequential(nn.Conv2d(F, 1, 1, 1, bias=True), nn.BatchNorm2d(F))
+        self.convPsi = nn.Sequential(nn.Conv2d(F, 1, 1, 1, bias=True), nn.BatchNorm2d(1))
         self.sigmoid = nn.Sigmoid()
 
 
