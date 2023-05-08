@@ -12,7 +12,7 @@ from torchvision.transforms import ToTensor, Resize, InterpolationMode, Normaliz
 class ResizeSample(object):
     def __init__(self):
         self.image_size = [572, 572]
-        self.mask_size = [572, 572]
+        self.mask_size = [560, 560]
 
     def __call__(self, sample):
         image = sample['image']
