@@ -117,9 +117,3 @@ class UNet(nn.Module):
 
 
         return x
-
-            
-if __name__ == '__main__':
-    x_input = torch.rand((3, 572, 572))
-    model = UNet()
-    y = model(x_input.unsqueeze(0))
