@@ -53,3 +53,28 @@ Dice loss addresses the issue of imbalance by focusing on the overlapping region
 
 I must admit that I spend a couple of days wondering why my model training was stuck at a sub-optimal point. The error was in the implementation of my dice loss. The correct formula for Dice Loss is shown above. 
 
+### Training
+
+I trained two models on Google Colab. Due to its GPU usage policy, I restricted the training to a single epoch. This did not affect my analysis much as I was observing and comparing loss on their entire set of training data and the model converged in the first epoch itself.
+
+The training specifications can be seen here: 
+
+Optimizer: SGD with momentum 
+Learning rate: 0.001 (constant)
+Momentum: 0.99
+Dataset: Caravana
+Data augmentation: Rotation only
+
+### Observation
+
+After the first epoch, the average training loss was (dice loss) 0.05 and the standard deviation of the loss values was 0.0011 
+
+### Inference
+
+Below is the inference output by the trained model.
+
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/attention-inference-1.png' width=200></p>
+
+
+
+
