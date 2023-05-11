@@ -59,11 +59,11 @@ I trained two models on Google Colab. Due to its GPU usage policy, I restricted 
 
 The training specifications can be seen here: 
 
-Optimizer: SGD with momentum 
-Learning rate: 0.001 (constant)
-Momentum: 0.99
-Dataset: Caravana
-Data augmentation: Rotation only
+Optimizer: SGD with momentum <br>
+Learning rate: 0.001 (constant) <br>
+Momentum: 0.99 <br>
+Dataset: Caravana <br>
+Data augmentation: Rotation only <br>
 
 ### Observation
 
