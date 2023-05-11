@@ -68,9 +68,9 @@ Data augmentation: Rotation only <br>
 Here are the metrics after the first epoch
 
 Average Dice Loss (vanilla model): 0.05282546548323471 +- 0.1040327460257257
-<br>
+<br><br>
 Average Dice Loss (with attention gates): 0.041662404339250496 +- 0.08821413838657734
-<br>
+<br><br>
 
 ### Inference
 
