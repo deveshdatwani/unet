@@ -1,4 +1,4 @@
-# U-Net
+# U-Net But With Attention
 
 ### Semantic Segmentation On Medical Images Through U Net With Attention Mechanism
 
@@ -43,7 +43,7 @@ And here's an example of an instance from the Kvasir-SEG dataset
 <p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/kvasir-seg-instance.jpg' width=200></p>
 <p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/kvasir-seg-mask.jpg' width=200></p>
 
-### Dataset Imbalance
+### Class Imbalance
 
 As can be observed, the Kvasir segmentation dataset is highly imbalanced. To compensate for this, I implemented Dice Loss as opposed to cross entropy loss mentioned in the paper.  
 
