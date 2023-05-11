@@ -78,7 +78,7 @@ Below is the inference output by the trained model.
 
 The image on the left is the instance to be segmented, the image in the centre is the output of the model while image on the right is the ground truth segmentation mask.
 
-<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/attention-inference-1.png' width=800></p>
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/vanilla-inference-1.png' width=800></p>
 
 
 
