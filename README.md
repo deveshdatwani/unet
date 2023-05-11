@@ -73,7 +73,7 @@ After the first epoch, the average training loss was (dice loss) 0.05 and the st
 
 Below is the inference output by the trained model.
 
-<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/attention-inference-1.png' width=200></p>
+<p align="center"><img src='https://raw.githubusercontent.com/deveshdatwani/unet/main/assets/attention-inference-1.png' width=800></p>
 
 
 
