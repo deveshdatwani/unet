@@ -91,6 +91,7 @@ if __name__ == "__main__":
         if 'model.pt' in os.listdir(MODEL_WEIGHTS_DIR):
             checkpoint = torch.load(MODEL_WEIGHTS_ADDRESS, map_location=torch.device('cpu'))
             model.load_state_dict(checkpoint['model_state_dict'])
+            print('CHECKPOINT LOADED')
 
         else:
             print('NO CHECKPOINTS FOUND')
