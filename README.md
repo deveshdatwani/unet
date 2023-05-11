@@ -55,7 +55,7 @@ I must admit that I spend a couple of days wondering why my model training was s
 
 ### Training
 
-I trained two models on Google Colab. Due to its GPU usage policy, I restricted the training to a single epoch. This did not affect my analysis much as I was observing and comparing loss on their entire set of training data and the model converged in the first epoch itself.
+I trained two U Net model architectures on Google Colab, one with attention mechanism and one without. Due to its GPU usage policy, I restricted the training to a single epoch. This did not affect my analysis much as I was observing and comparing loss on their entire set of training data and the model converged in the first epoch itself.
 
 The training specifications can be seen here: 
 
@@ -65,9 +65,12 @@ Momentum: 0.99 <br>
 Dataset: Caravana <br>
 Data augmentation: Rotation only <br>
 
-### Observation
+Here are the metrics after the first epoch
 
-After the first epoch, the average training loss was (dice loss) 0.05 and the standard deviation of the loss values was 0.0011 
+Average Dice Loss (vanilla model): 0.05282546548323471 +- 0.1040327460257257
+<br><br>
+Average Dice Loss (with attention gates): 0.041662404339250496 +- 0.08821413838657734
+<br><br>
 
 ### Inference
 
