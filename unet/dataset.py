@@ -53,6 +53,7 @@ class NormalizeImage():
 
         return sample
 
+
 class Caravan(Dataset):
     def __init__(self, root_dir, json=None):
        self.root_dir = root_dir
