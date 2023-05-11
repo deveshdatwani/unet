@@ -73,7 +73,7 @@ if __name__ == "__main__":
     EPOCHS = 1
     BATCH_SIZE = 1
     PATH = '/home/deveshdatwani/Datasets/Caravan'
-    MODEL_TYPE = 'attention'
+    MODEL_TYPE = 'not attention'
     model = UNet()
     MODEL_WEIGHTS_DIR = '/home/deveshdatwani/Unet/weights'
 
