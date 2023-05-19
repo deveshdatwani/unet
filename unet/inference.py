@@ -16,7 +16,7 @@ if __name__ == '__main__':
     torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     EPOCHS = 1
     BATCH_SIZE = 1
-    DATA_PATH = '/home/deveshdatwani/Datasets/CARAVANA'
+    DATA_PATH = '/home/deveshdatwani/Datasets/SMALL'
     MODEL_TYPE = 'attention'
     model = UNet()
     MODEL_WEIGHTS_DIR = '/home/deveshdatwani/Unet/weights'

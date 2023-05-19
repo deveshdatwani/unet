@@ -10,6 +10,9 @@ from torchvision.transforms import ToTensor, Resize, InterpolationMode, Normaliz
 def infer(image_address, model):
     image_size = [572, 572]
     image = np.array(cv2.imread(image_address), dtype=np.float32) / 255.0
+    plt.imshow(image)
+    plt.show()
+
     image = image.transpose((2,0,1)) 
     image = torch.from_numpy(image)
     image = Resize(image_size, interpolation=InterpolationMode.BILINEAR, antialias=True )(image)
@@ -20,4 +23,4 @@ def infer(image_address, model):
     plt.imshow(inference[0].detach().numpy().transpose(1,2,0))
     plt.show()
 
-    return None
+    return None 
